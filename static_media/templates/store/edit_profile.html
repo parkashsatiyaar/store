@@ -1,0 +1,103 @@
+{% extends 'base.html' %} {% load static %} {% comment %} fsmhmsfshrhh
+{%endcomment %} {% block metatags %}{% for home in homes %}
+<meta name="description" content="{{home.description |safe}}" />
+<meta name="keywords" content="{{home.keyword |safe}}" />
+<meta name="author" content="Parkash Satiyaar" />
+{% endfor %}{% endblock metatags %} {% block title %} {% for home in homes %}
+Edit Profile - {{home.title}} {% endfor %} {% endblock title %} {%block content %}
+{%comment%} dgdg {% endcomment %} {% include 'includes/navbar.html' %}
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-conten padding-y bg">
+  <div class="container">
+    <div class="row">
+      <aside class="col-md-3">
+        <!--   SIDEBAR   -->
+        <ul class="list-group">
+          <a class="list-group-item" href="{% url 'dashboard' %}"> Dashboard </a>
+          <a class="list-group-item" href="{% url 'my_orders' %}"> My Orders </a>
+          <a class="list-group-item {% if '/edit_profile/' in request.path %}bg-dark text-light{% endif %}" href="{% url 'edit_profile' %}">Edit Profile</a>
+          <a class="list-group-item" href="{% url 'change_password' %}"> Change Password </a>
+        </ul>
+        <br />
+        <a class="btn btn-light btn-block" href="{% url 'signout' %}">
+          <i class="fa fa-power-off"></i> <span class="text">Log out</span>
+        </a>
+        <!--   SIDEBAR .//END   -->
+      </aside>
+      <main class="col-md-9">
+        <article class="card">
+          <header class="card-header">
+            <strong class="d-inline-block mr-3">Edit your profile</strong>
+          </header>
+          <div class="card-body">
+            <div class="row">
+            <div class="col-md-12">
+              {% if userprofile.profile_picture.url %}
+              <div class="justify-content-right">
+                <img src="{{userprofile.profile_picture.url}}" style="width:150px; border-radius:50%;" alt="Profile Picture">
+              </div>
+              {% endif %}
+              <form action="{% url 'edit_profile' %}" method="post" enctype='multipart/form-data'>
+                {% csrf_token %}
+                <div class="row">
+                  <div class="form-group col-md-6 my-3">
+                    <label>First Name</label>
+                    {{user_form.first_name}}
+                  </div>
+                  <div class="form-group col-md-6 my-3">
+                    <label>Last Name</label>
+                    {{user_form.last_name}}
+                  </div>
+                </div>
+                <div class="row my-3">
+                  <div class="form-group col-md-6 my-3">
+                    <label>Phone No</label>
+                    {{user_form.phone_number}}
+
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="profile" class="bold">Profile Picture</label>
+                    {{profile_form.profile_picture}}
+                  </div>
+                  <div class="form-group col-md-12 my-3">
+                    <label>Address Line 1</label>
+                    {{profile_form.address_line_1}}
+                  </div>
+                  <div class="form-group col-md-12 my-3">
+              
+                    <label>Address Line 2</label>
+                    {{profile_form.address_line_2}}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-4 my-1">
+                    <label>City</label>
+                    {{profile_form.city}}
+                  </div>
+                  <div class="form-group col-md-4 my-1">
+                    <label>State</label>
+                    {{profile_form.state}}
+                  </div>
+                  <div class="form-group col-md-4 my-1">
+                    <label>Country</label>
+                    {{profile_form.country}}
+                </div>
+                  <div class="form-group col-md-3 text-center mx-auto my-3">
+                    <input type="submit" placeholder="save" value="save" class="mybtn form-control"/>
+                </div>
+              </form>
+            </div>
+            </div>
+            <!-- row.// -->
+          </div>
+          <!-- card-body .// -->
+        </article>
+        <!-- order-group.// -->
+      </main>
+    </div>
+    <!-- row.// -->
+  </div>
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+{% include 'includes/footer.html' %} {% endblock content %}

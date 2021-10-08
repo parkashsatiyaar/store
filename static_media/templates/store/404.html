@@ -1,0 +1,51 @@
+{% extends 'base.html' %} {% load static %} {% comment %} fsmhmsfshrhh
+{%endcomment %} {% block metatags %}{% for home in homes %}
+<meta name="description" content="{{home.description |safe}}" />
+<meta name="keywords" content="{{home.keyword |safe}}" />
+<meta name="author" content="Parkash Satiyaar" />
+{% endfor %}{% endblock metatags %} {% block title %} {% for home in homes %}
+Not Found - {{home.title}} {% endfor %} {% endblock title %} {%block content %}
+{%comment%} dgdg {% endcomment %} {% include 'includes/navbar.html' %}
+<main class="main-content">
+  <!--== Start Page Header Area Wrapper ==-->
+  <div class="page-header-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <div class="page-header-content">
+            <nav class="breadcrumb-area">
+              <ul class="breadcrumb">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-sep">/</li>
+                <li>404 Not Found</li>
+              </ul>
+            </nav>
+            <h4 class="title">404 Not Found</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--== End Page Header Area Wrapper ==-->
+
+  <!--== Start Page Not Found Area Wrapper ==-->
+  <section class="page-not-found-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="page-not-found-content">
+            <h1>404</h1>
+            <h2>Opps! PAGE NOT BE FOUND</h2>
+            <p>
+              Sorry but the page you are looking for does not exist, have <br />
+              been removed, name changed or is temporarity unavailable.
+            </p>
+            <a class="btn-back" href="{% url 'home' %}">Back to home page</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--== End Page Not Found Area Wrapper ==-->
+</main>
+{% include 'includes/footer.html' %} {% endblock content %}

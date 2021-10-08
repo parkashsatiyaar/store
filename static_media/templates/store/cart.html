@@ -1,0 +1,164 @@
+{% extends 'base.html' %} {% load static %} {% comment %} fsmhmsfshrhh
+{%endcomment %} {% block metatags %}{% for home in homes %}
+<meta name="description" content="{{home.description |safe}}" />
+<meta name="keywords" content="{{home.keyword |safe}}" />
+<meta name="author" content="Parkash Satiyaar" />
+{% endfor %}{% endblock metatags %} {% block title %} {% for home in homes %}
+Cart - {{home.title}} {% endfor %} {% endblock title %} {%block content %}
+{%comment%} dgdg {% endcomment %} {% include 'includes/navbar.html' %}
+<main class="main-content">
+  <!--== Start Page Header Area Wrapper ==-->
+  <div class="page-header-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <div class="page-header-content">
+            <h4 class="title mt-0">Your Shopping Cart</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--== End Page Header Area Wrapper ==-->
+
+  <!--== Start Product Area Wrapper ==-->
+  <section class="product-area shopping-cart-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="shopping-cart-wrap">
+            <div class="cart-table table-responsive">
+              {% if cartItems %}
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="indecor-product-remove">Remove</th>
+                    <th class="indecor-product-thumbnail">Image</th>
+                    <th class="indecor-product-name">Product</th>
+                    <th class="indecor-product-price">Price</th>
+                    <th class="indecor-product-quantity">Quantity</th>
+                    <th class="indecor-product-subtotal">Sub Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for product in cartItems %}
+                  <tr>
+                    <td class="indecor-product-remove">
+                      <a
+                        href="{% url 'deleteCartItem' product.product.id %}?color={{product.itemColor}}&size={{product.itemSize}}"
+                        ><i class="fa fa-times"></i
+                      ></a>
+                    </td>
+                    <td class="indecor-product-thumbnail">
+                      <a href="{% url 'product' product.product.productSlug %}"
+                        ><img
+                          src="{{product.product.productImage.url}}"
+                          alt="Image-HasTech"
+                      /></a>
+                    </td>
+                    <td class="indecor-product-name">
+                      <h4 class="h6">{{product.product.productTitle}}</h4>
+                      <span class="h6 mr-2">Color:</span
+                      ><mark>{{product.itemColor}}</mark>
+                      <span class="h6 mr-2">Size:</span
+                      ><mark>{{product.itemSize}}</mark>
+                    </td>
+                    <td class="indecor-product-price">
+                      <span class="price"
+                        >${{product.product.ProductPrice}}</span
+                      >
+                    </td>
+                    <td class="indecor-product-quantity">
+                      <div class="form">
+                        <form
+                          action="{% url 'updateCart' product.product.id %}"
+                          id="{{product.product.id}}"
+                        >
+                          <input
+                            type="hidden"
+                            name="color"
+                            value="{{product.itemColor}}"
+                          />
+                          <input
+                            type="hidden"
+                            name="size"
+                            value="{{product.itemSize}}"
+                          />
+                          <input
+                            type="text"
+                            id="quantity"
+                            title="Quantity"
+                            name="quantity"
+                            class="form-control text-center"
+                            value="{{product.quantity}}"
+                          />
+                        </form>
+                      </div>
+                      <div class="coupon2">
+                        <button
+                          class="mybtn m-2"
+                          type="button"
+                          onclick="mySubmit({{product.product.id}})"
+                          class="button"
+                        >
+                          Update
+                        </button>
+                      </div>
+                    </td>
+                    <td class="product-subtotal">
+                      <span class="price">${{product.subTotal}}</span>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              {% else %}
+              <div class="coupon text-center">
+                <h3>
+                  <span class="h1">!</span> Oops, please purchase something...
+                </h3>
+              </div>
+              {% endif %}
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-lg-7 col-12">
+                <div class="coupon-all">
+                  <div class="coupon">
+                    <a class="button" href="{% url 'products' %}"
+                      >Continue Shopping</a
+                    >
+                    {% if cartItems %}
+                    <a class="button" href="{% url 'deleteCart' %}"
+                      >Clear Cart</a
+                    >
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              {% if cartItems %}
+              <div class="col-md-12 col-lg-5 col-12">
+                <div class="cart-page-total">
+                  <h3>Cart Totals</h3>
+                  <ul>
+                    <li>Total <span class="text-danger">${{total}}</span></li>
+                    <li>Tax <span class="money">${{tax}}</span></li>
+                    <li>
+                      Grand Total
+                      <span class="text-success">${{grandTotal}}</span>
+                    </li>
+                  </ul>
+                  <a class="proceed-to-checkout-btn" href="{% url 'checkout' %}"
+                    >Proceed to Checkout</a
+                  >
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--== End Product Area Wrapper ==-->
+</main>
+{% include 'includes/footer.html' %} {% endblock content %}

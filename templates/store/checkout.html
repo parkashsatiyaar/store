@@ -1,0 +1,209 @@
+{% extends 'base.html' %} {% load static %} {% comment %} fsmhmsfshrhh
+{%endcomment %} {% block metatags %}{% for home in homes %}
+<meta name="description" content="{{home.description |safe}}" />
+<meta name="keywords" content="{{home.keyword |safe}}" />
+<meta name="author" content="Parkash Satiyaar" />
+{% endfor %}{% endblock metatags %} {% block title %} {% for home in homes %}
+Checkout - {{home.title}} {% endfor %} {% endblock title %} {%block content %}
+{%comment%} dgdg {% endcomment %} {% include 'includes/navbar.html' %}
+<main class="main-content">
+  <!--== Start Product Area Wrapper ==-->
+  <section class="product-area shopping-cart-area">
+    <div class="container">
+      <div class="row">
+        <aside class="col-lg-9">
+          <div class="shopping-cart-wrap">
+            <div class="cart-table table-responsive">
+              {% if cartItems %}
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="indecor-product-remove">Remove</th>
+                    <th class="indecor-product-thumbnail">Image</th>
+                    <th class="indecor-product-name">Product</th>
+                    <th class="indecor-product-price">Price</th>
+                    <th class="indecor-product-quantity">Quantity</th>
+                    <th class="indecor-product-subtotal">Sub Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for product in cartItems %}
+                  <tr>
+                    <td class="indecor-product-remove">
+                      <a
+                        href="{% url 'deleteCartItem' product.product.id %}?color={{product.itemColor}}&size={{product.itemSize}}"
+                        ><i class="fa fa-times"></i
+                      ></a>
+                    </td>
+                    <td class="indecor-product-thumbnail">
+                      <a href="{% url 'product' product.product.productSlug %}"
+                        ><img
+                          src="{{product.product.productImage.url}}"
+                          alt="Image-HasTech"
+                      /></a>
+                    </td>
+                    <td class="indecor-product-name">
+                      <h4 class="h6">{{product.product.productTitle}}</h4>
+                      <span class="h6 mr-2">Color:</span
+                      ><mark>{{product.itemColor}}</mark>
+                      <span class="h6 mr-2">Size:</span
+                      ><mark>{{product.itemSize}}</mark>
+                    </td>
+                    <td class="indecor-product-price">
+                      <span class="price"
+                        >${{product.product.ProductPrice}}</span
+                      >
+                    </td>
+                    <td class="indecor-product-quantity">
+                      <div class="form">
+                        <form
+                          action="{% url 'updateCart' product.product.id %}"
+                          id="{{product.product.id}}"
+                        >
+                          <input
+                            type="hidden"
+                            name="color"
+                            value="{{product.itemColor}}"
+                          />
+                          <input
+                            type="hidden"
+                            name="size"
+                            value="{{product.itemSize}}"
+                          />
+                          <input
+                            type="text"
+                            id="quantity"
+                            title="Quantity"
+                            name="quantity"
+                            class="form-control text-center"
+                            value="{{product.quantity}}"
+                          />
+                        </form>
+                      </div>
+                      <div class="coupon2">
+                        <button
+                          class="mybtn m-2"
+                          type="button"
+                          onclick="mySubmit({{product.product.id}})"
+                          class="button"
+                        >
+                          Update
+                        </button>
+                      </div>
+                    </td>
+                    <td class="product-subtotal">
+                      <span class="price">${{product.subTotal}}</span>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              {% else %}
+              <div class="coupon text-center">
+                <h3>
+                  <span class="h1">!</span> Oops, please purchase something...
+                </h3>
+              </div>
+              {% endif %}
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-lg-7 col-12">
+                <div class="coupon-all">
+                  <div class="coupon">
+                    <a class="button" href="{% url 'products' %}"
+                      >Continue Shopping</a
+                    >
+                    {% if cartItems %}
+                    <a class="button" href="{% url 'deleteCart' %}"
+                      >Clear Cart</a
+                    >
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% if cartItems %}
+          <div class="card mt-3">
+            <div class="card-body">
+              <div class="h5 mb-4 bold">Billing Address</div>
+              <form action="{% url 'place_order' %}" method="post">
+              {% csrf_token %}
+                <div class="row py-3">
+                  <div class="col-6 form-group">
+                    <input placeholder="fisrt name" type="text" name="first_name" class="form-control" required>
+                  </div>
+                  <div class="col-6 form-group">
+                    <input placeholder="last name" type="text" name="last_name" class="form-control" required>
+                  </div>
+                </div>
+                <div class="row py-3">
+                  <div class="col-6 form-group">
+                    <input placeholder="email" type="email" name="email" class="form-control" required>
+                  </div>
+                  <div class="col-6 form-group">
+                    <input placeholder="phone number" type="text" name="phone" class="form-control" required>
+                  </div>
+                </div>
+                <div class="row py-3">
+                  <div class="col-6 form-group">
+                    <input placeholder="address line 1" type="text" name="address_line_1" class="form-control" required>
+                  </div>
+                  <div class="col-6 form-group">
+                    <input placeholder="address line 2" type="text" name="address_line_2" class="form-control">
+                  </div>
+                <div class="row py-4 mx-auto">
+                  <div class="col-4 form-group">
+                    <input placeholder="city" type="text" name="city" class="form-control" required>
+                  </div>
+                  <div class="col-4 form-group">
+                    <input placeholder="state" type="text" name="state" class="form-control" required>
+                  </div>
+                  <div class="col-4 form-group">
+                    <input placeholder="country" type="text" name="country" class="form-control" required>
+                  </div>
+                </div>
+                <div class="row mx-auto">
+                  <div class="col form-group">
+                    <textarea style="resize: none;" name="order_note" rows="3" class="form-control"></textarea>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+          {% endif %}
+          <!-- card.// -->
+        </aside>
+        <!-- col.// -->
+              {% if cartItems %}
+        <aside class="col-lg-3">
+          <div class="card">
+            <div class="card-body text-center">
+              <dl class="dlist-align">
+                <dt>Total Price: <span class="bold px-1 text-dark">${{total}}</span></dt>
+              </dl>
+              <dl class="dlist-align">
+                <dt>Tax: <span class="px-1 text-danger">${{tax}}</span></dt>
+              </dl>
+              <dl class="dlist-align">
+                <dt>Price: <span class="px-1 text-success">${{grandTotal}}</span></dt>
+              </dl>
+              <hr />
+              <div class="text-center">
+                <button type="submit" class="mybtn" href="#"
+                  >Place Order</
+                >
+            <!-- card-body.// -->
+              </div>
+              </form>
+          <!-- card.// -->
+        </aside>
+              {% endif %}
+        <!-- col.// -->
+      </div>
+      <!-- row.// -->
+    </div>
+  </section>
+  <!--== End Product Area Wrapper ==-->
+</main>
+{% include 'includes/footer.html' %} {% endblock content %}

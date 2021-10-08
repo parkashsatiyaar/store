@@ -1,0 +1,20 @@
+{% extends 'base.html' %} {% load static %} {% comment %} fsmhmsfshrhh
+{%endcomment %} {% block metatags %}{% for home in homes %}
+<meta name="description" content="{{home.description |safe}}" />
+<meta name="keywords" content="{{home.keyword |safe}}" />
+<meta name="author" content="Parkash Satiyaar" />
+{% endfor %}{% endblock metatags %} {% block title %} {% for home in homes %}
+Confirm Email - {{home.title}} {% endfor %} {% endblock title %}
+<!-- content -->
+{%block content %}
+<!-- content -->
+{%comment%} dgdg {% endcomment %} {% include 'includes/navbar.html' %}
+<div class="container text-center">
+  <div class="login-form row">
+    <div class="content card my-5 py-5">
+      <h4 class="title">A link is send to your registered email address!</h4>
+      <a class="text-center mt-2" href="{% url 'signin' %}">Signin</a>
+    </div>
+  </div>
+</div>
+{% include 'includes/footer.html' %} {% endblock content %}

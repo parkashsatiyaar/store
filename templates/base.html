@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{% block title %}{% endblock title %}</title>
+    {% block metatags %}{% endblock metatags %}
+
+    <!--== Favicon ==-->
+    <link
+      rel="shortcut icon"
+      href="{% static 'assets/img/favicon.ico' %}"
+      type="image/x-icon"
+    />
+
+    <!--== Google Fonts ==-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:300,400,400i,500,500i,600,700,800,900"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link
+    href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,500,600,700"
+      rel="stylesheet"
+      />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/evil-icons@1.9.0/assets/evil-icons.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/evil-icons@1.9.0/assets/evil-icons.min.js"></script>
+        
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <!--== Bootstrap CSS ==-->
+    <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <!--== Headroom CSS ==-->
+    <link href="{% static 'assets/css/headroom.css' %}" rel="stylesheet" />
+    <!--== Animate CSS ==-->
+    <link href="{% static 'assets/css/animate.css' %}" rel="stylesheet" />
+    <!--== Ionicons CSS ==-->
+    <!-- <link href="{% static 'assets/css/ionicons.css' %}" rel="stylesheet" /> -->
+    <!--== Material Icon CSS ==-->
+    <!-- <link href="{% static 'assets/css/material-design-iconic-font.css' %}" rel="stylesheet" /> -->
+    <!--== Elegant Icon CSS ==-->
+    <!-- <link href="{% static 'assets/css/elegant-icons.css' %}" rel="stylesheet" /> -->
+    <!--== Font Awesome Icon CSS ==-->
+    <!-- <link href="{% static 'assets/css/font-awesome.min.css' %}" rel="stylesheet" /> -->
+    <!--== Swiper CSS ==-->
+    <link href="{% static 'assets/css/swiper.min.css' %}" rel="stylesheet" />
+    <!--== Fancybox Min CSS ==-->
+    <link href="{% static 'assets/css/fancybox.min.css' %}" rel="stylesheet" />
+    <!--== Slicknav Min CSS ==-->
+    <link href="{% static 'assets/css/slicknav.css' %}" rel="stylesheet" />
+    
+    <!--== Main Style CSS ==-->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
+    <script src="https://www.paypal.com/sdk/js?client-id=AU4gbCQQ9nphPO4leQMuk3iP0aXgmeCWR97fg6f0BvA5BAVwMAz55bv7reFs3MJrKLqDo8ay6rw8mUIE&currency=CAD"></script>
+    <!--[if lt IE 9]>
+      <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    </head>
+
+  <body>
+    <!--wrapper start-->
+    <div class="wrapper">
+      <!--== Start Preloader Content ==-->
+      <div class="preloader-wrap">
+        <div class="preloader">
+          <span class="dot"></span>
+          <div class="dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+      <!--== End Preloader Content ==-->
+
+{% block content %}{% endblock content %}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <!--== Start Search Area Wrapper ==-->
+            <div class="search-form-wrap">
+              <!--== Start Search Form ==-->
+              <div class="search-form">
+                <div class="content">
+                  <h4 class="title">Search for products</h4>
+                </div>
+                <form action="{% url 'products' %}">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group">
+                        <input class="form-control" type="search" placeholder="Search our store" name="searchKeyword">
+                        <button class="btn-search" type="submit">Search</button>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </form>
+              <!--== End Search Form ==-->
+            </div>
+          </div>        
+    <!--== End Search Area Wrapper ==-->
+      </div>
+      <div class="modal-footer">
+        <span class="my-2"></span>
+      </div>
+    </div>
+  </div>
+</div>
+<!--=======================Javascript============================-->
+
+    <!--=== jQuery Modernizr Min Js ===-->
+    <script src="{% static 'assets/js/modernizr.js' %} "></script>
+    <!--=== jQuery Min Js ===-->
+    <script src="{% static 'assets/js/jquery-main.js' %}"></script>
+    <!--=== jQuery Migration Min Js ===-->
+    <script src="{% static 'assets/js/jquery-migrate.js' %}"></script>
+    <!--=== jQuery Popper Min Js ===-->
+    <script src="{% static 'assets/js/popper.min.js' %}"></script>
+    <!--=== jQuery Bootstrap Min Js ===-->
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <!--=== jQuery Headroom Min Js ===-->
+    <script src="{% static 'assets/js/headroom.min.js' %}"></script>
+    <!--=== jQuery Swiper Min Js ===-->
+    <script src="{% static 'assets/js/swiper.min.js' %}"></script>
+    <!--=== jQuery Fancybox Min Js ===-->
+    <script src="{% static 'assets/js/fancybox.min.js' %}"></script>
+    <!--=== jQuery Slick Nav Js ===-->
+    <script src="{% static 'assets/js/slicknav.js' %}"></script>
+    <!--=== jQuery Countdown Js ===-->
+    <script src="{% static 'assets/js/countdown.js' %}"></script>
+    <!--=== jQuery Zoom Min Js ===-->
+    <script src="{% static 'assets/js/jquery-zoom.min.js' %}"></script>
+
+    <!--=== jQuery Custom Js ===-->
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+    <script>
+    // show the alert
+    setTimeout(function() {
+        $(".alert").alert('close');
+    }, 3000);
+// Images Zoom
+$('.zoom-hover').zoom();
+    
+    $('#myModal').on('shown.bs.modal', function () {
+      $('#myInput').trigger('focus')
+    })
+function mySubmit(id) {
+  let allAreFilled = true;
+  document.getElementById(id).querySelectorAll("[required]").forEach(function(i) {
+    if (!allAreFilled) return;
+    if (!i.value) allAreFilled = false;
+  })
+  if (!allAreFilled) {
+    alert('Fill all the fields');
+  }else{
+    document.getElementById(id).submit();
+  }
+    }    
+
+    $("p").filter('[data-f-id="pbf"]').remove()
+    </script>
+  
+  </body>
+</html>

@@ -1,0 +1,100 @@
+{% extends 'base.html' %} {% load static %} {% comment %} fsmhmsfshrhh
+{%endcomment %} {% block metatags %}{% for home in homes %}
+<meta name="description" content="{{home.description |safe}}" />
+<meta name="keywords" content="{{home.keyword |safe}}" />
+<meta name="author" content="Parkash Satiyaar" />
+{% endfor %}{% endblock metatags %} {% block title %} {% for home in homes %}
+Signin - {{home.title}} {% endfor %} {% endblock title %} {%block content %}
+{%comment%} dgdg {% endcomment %} {% include 'includes/navbar.html' %}
+<main class="main-content">
+  <!--== Start Page Header Area Wrapper ==-->
+  <div class="page-header-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <div class="page-header-content">
+            <nav class="breadcrumb-area">
+              <ul class="breadcrumb">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-sep">/</li>
+                <li>Account</li>
+              </ul>
+            </nav>
+            <h4 class="title">Account</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--== End Page Header Area Wrapper ==-->
+
+  <!--== Start Account Area Wrapper ==-->
+  <section class="account-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-8 m-auto">
+          <div class="account-form-wrap">
+            <!--== Start Login Form ==-->
+            <div class="login-form">
+              <div class="content">
+                <h4 class="title">Signin</h4>
+                <p>Please Signin using account detail bellow.</p>
+              </div>
+              {% include 'messages.html' %}
+              <form id="signin" action="{% url 'signin' %}" method="post">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <input
+                        class="form-control"
+                        type="email"
+                        placeholder="Email"
+                        name="email"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <input
+                        class="form-control"
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="login-form-group">
+                      <button class="btn-sign" onclick="mySubmit('signin')">
+                        Sign In
+                      </button>
+                      <a
+                        class="btn-pass-forgot"
+                        href="{% url 'forgot_password' %}"
+                        >Forgot your password?</a
+                      >
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="account-optional-group">
+                      <a class="btn-create" href="{% url 'signup' %}"
+                        >Create account?</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <!--== End Login Form ==-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--== End Account Area Wrapper ==-->
+</main>
+
+{% include 'includes/footer.html' %} {% endblock content %}

@@ -1,0 +1,209 @@
+{% extends 'base.html' %} {% load static %} {% comment %} fsmhmsfshrhh
+{%endcomment %} {% block metatags %}{% for home in homes %}
+<meta name="description" content="{{home.description |safe}}" />
+<meta name="keywords" content="{{home.keyword |safe}}" />
+<meta name="author" content="Parkash Satiyaar" />
+{% endfor %}{% endblock metatags %} {% block title %} {% for home in homes %}
+Home - {{home.title}} {% endfor %} {% endblock title %} {%block content %}
+{%comment%} dgdg {% endcomment %} {% include 'includes/navbar.html' %}
+<main class="main-content">
+  <!--== Start Hero Area Wrapper ==-->
+  <section class="home-slider-area">
+    <div
+      class="
+        swiper-container swiper-slide-gap
+        home-slider-container
+        default-slider-container
+      "
+    >
+      <div class="swiper-wrapper home-slider-wrapper slider-default">
+        {% for banner in banners %}
+        <div class="swiper-slide">
+          <div
+            class="slider-content-area"
+            data-bg-img="{{banner.image.url}}"
+          ></div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!--== Add Swiper Arrows ==-->
+      <div class="swiper-button-next">
+        <i class="fas fa-arrow-right"></i>
+      </div>
+      <div class="swiper-button-prev">
+        <i class="fas fa-arrow-left"></i>
+      </div>
+    </div>
+  </section>
+  <!--== End Hero Area Wrapper ==-->
+
+  <!--== Start Feature Area Wrapper ==-->
+  <section class="feature-area">
+    <div class="container pb-1">
+      <div class="row">
+        <div class="col-md-6 col-lg-4">
+          <!--== Start Feature Item ==-->
+          <div class="feature-icon-box">
+            <div class="inner-content">
+              <div class="icon-box">
+                <i class="fas fa-shipping-fast"></i>
+              </div>
+              <div class="content">
+                <h5 class="title">Free shipping worldwide</h5>
+                <p>Freeship over oder $100</p>
+              </div>
+            </div>
+          </div>
+          <!--== End Feature Item ==-->
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <!--== Start Feature Item ==-->
+          <div class="feature-icon-box">
+            <div class="inner-content">
+              <div class="icon-box">
+                <i class="fas fa-headphones"></i>
+              </div>
+              <div class="content">
+                <h5 class="title">Support 24/7</h5>
+                <p>Contact us 24 hours a day</p>
+              </div>
+            </div>
+          </div>
+          <!--== End Feature Item ==-->
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <!--== Start Feature Item ==-->
+          <div class="feature-icon-box">
+            <div class="inner-content mb-0">
+              <div class="icon-box">
+                <i class="fas fa-credit-card"></i>
+              </div>
+              <div class="content">
+                <h5 class="title">100% secure payment</h5>
+                <p>Your payment are safe with us.</p>
+              </div>
+            </div>
+          </div>
+          <!--== End Feature Item ==-->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--== End Feature Area Wrapper ==-->
+
+  <!--== Start Product Area Wrapper ==-->
+  <section class="product-area">
+    <div class="container product-pb" data-padding-bottom="25">
+      <div class="row">
+        <div class="col-12">
+          <div class="product-category-tab-wrap">
+            <ul
+              class="nav nav-tabs product-category-nav justify-content-center"
+              id="myTab"
+              role="tablist"
+            >
+              <li class="nav-item" role="presentation">
+                <div class="section-title text-center">
+                  <h2 class="title">Best Seller</h2>
+                </div>
+              </li>
+            </ul>
+            <div class="tab-content product-category-content" id="myTabContent">
+              <div
+                class="tab-pane fade show active"
+                id="bestSeller"
+                role="tabpanel"
+                aria-labelledby="best-seller-tab"
+              >
+                <div class="row">
+                  <div class="col-12">
+                    <div
+                      class="
+                        swiper-container swiper-slide-gap
+                        product-slider-container
+                      "
+                    >
+                      <div class="swiper-wrapper">
+                        {% for product in products %}
+                        <div class="swiper-slide">
+                          <!--== Start Shop Item ==-->
+                          <div class="product-item">
+                            <div class="inner-content">
+                              <div class="product-thumb">
+                                <a
+                                  href="{% url 'products' %}{{product.productSlug}}"
+                                >
+                                  <img
+                                    class="w-100"
+                                    src="{{product.productImage.url}}"
+                                    alt="Image-HasTech"
+                                  />
+                                </a>
+                                {% if product.productStock > 0 %}
+                                <div class="product-action">
+                                  <div class="addto-wrap">
+                                    <a
+                                      class="add-cart"
+                                      href="{% url 'addCart' product.id %}"
+                                    >
+                                      <i
+                                        class="
+                                          zmdi zmdi-shopping-cart-plus
+                                          icon
+                                        "
+                                      ></i>
+                                    </a>
+                                  </div>
+                                </div>
+                                {% endif %}
+                              </div>
+                              <div class="product-desc">
+                                <div class="product-info">
+                                  <h4 class="title">
+                                    <a
+                                      href="{% url 'products' %}{{product.productSlug}}"
+                                      >{{product.productTitle}}</a
+                                    >
+                                  </h4>
+                                  <div class="prices">
+                                    <span class="price"
+                                      >${{product.ProductPrice}}</span
+                                    >
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!--== End Shop Item ==-->
+                        </div>
+                        {% endfor %}
+                      </div>
+
+                      <!--== Add Swiper navigation Buttons ==-->
+                      <div class="swiper-button-prev">
+                        <i class="fas fa-arrow-left"></i>
+                      </div>
+                      <div class="swiper-button-next">
+                        <i class="fas fa-arrow-right"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="mostView"
+                role="tabpanel"
+                aria-labelledby="most-view-tab"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--== End Product Area Wrapper ==-->
+</main>
+
+{% include 'includes/footer.html' %} {% endblock content %}

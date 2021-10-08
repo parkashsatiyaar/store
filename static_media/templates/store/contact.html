@@ -1,0 +1,61 @@
+{% extends 'base.html' %} {% load static %} {% comment %} fsmhmsfshrhh
+{%endcomment %} {% block metatags %}{% for home in homes %}
+<meta name="description" content="{{home.description |safe}}" />
+<meta name="keywords" content="{{home.keyword |safe}}" />
+<meta name="author" content="Parkash Satiyaar" />
+{% endfor %}{% endblock metatags %} {% block title %} {% for home in homes %}
+Contact - {{home.title}} {% endfor %} {% endblock title %} {%block content %}
+{%comment%} dgdg {% endcomment %} {% include 'includes/navbar.html' %}
+<main class="main-content">
+  <!--== Start Page Header Area Wrapper ==-->
+  <div class="page-header-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <div class="page-header-content">
+            <nav class="breadcrumb-area">
+              <ul class="breadcrumb">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-sep">/</li>
+                <li>contact</li>
+              </ul>
+            </nav>
+            <h4 class="title">contact</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--== End Page Header Area Wrapper ==-->
+
+  <!--== Start Contact Info Area Wrapper ==-->
+  <section class="contact-info-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-4">
+          <div class="contact-info-item">
+            <h4>CONTACT DIRECTLY</h4>
+            <p>info@example.com</p>
+            <p>+08801234576</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="contact-info-item">
+            <h4>VISIT OUR OFFICE</h4>
+            <p>184 Main Rd E, St Albans</p>
+            <p>VIC 3021,</p>
+          </div>
+        </div>
+        <div class="col-md-6 offset-md-3 col-lg-4 offset-lg-0">
+          <div class="contact-info-item">
+            <h4>WORK WITH US</h4>
+            <p>Send your CV to our email:</p>
+            <p>career@example.com</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--== End Contact Info Area Wrapper ==-->
+</main>
+{% include 'includes/footer.html' %} {% endblock content %}
