@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models.enums import Choices
 from froala_editor.fields import FroalaField
 # Create your models here.
 

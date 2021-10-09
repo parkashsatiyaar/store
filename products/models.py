@@ -1,7 +1,8 @@
+from accounts.models import Account
 from app.models import Category
 from django.db import models
 from froala_editor.fields import FroalaField
-
+from django.db.models import Avg
 
 # Create your models here.
 
@@ -23,6 +24,14 @@ class Product(models.Model):
 
     def __str__(self):
         return self.productName
+
+    def averageReview(self):
+        reviews = ReviewRating.objects.filter(
+            product=self, status=True).aggregate(average=Avg('rating'))
+        avg = 0
+        if reviews['average'] is not None:
+            avg = float(reviews['average'])
+            return avg
 
 
 variationCategory = (
@@ -56,3 +65,18 @@ class ProductGallery(models.Model):
     class Meta:
         verbose_name = 'product gallery'
         verbose_name_plural = 'product gallery'
+
+
+class ReviewRating(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    subject = models.CharField(max_length=100, blank=True)
+    review = models.TextField()
+    rating = models.FloatField()
+    ip = models.CharField(max_length=50)
+    status = models.BooleanField(default=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.subject

@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import Product, ProductGallery, Variation
+from .models import Product, ProductGallery, ReviewRating, Variation
 import admin_thumbnails
 # Register your models here.
+
 
 @admin_thumbnails.thumbnail('image')
 class ProductGalleryInline(admin.TabularInline):
@@ -31,4 +32,5 @@ class VariationAdmin(admin.ModelAdmin):
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Variation, VariationAdmin)
+admin.site.register(ReviewRating)
 # admin.site.register(ProductGallery)

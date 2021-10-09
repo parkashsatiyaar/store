@@ -95,6 +95,14 @@ dgdgaddgkdnfgae {% endcomment %} {% for product in singleProduct %}
                   <div class="prices">
                     <span class="price">${{product.ProductPrice}}</span>
                   </div>
+                  <ul class="review-rating">
+                    {{product.averageReview}}
+                    <li class="fa fa-star{% if product.averageReview == 0.5 %}-half-o{% elif product.averageReview < 1 %}-o{% endif %}"></li>
+                    <li class="fa fa-star{% if product.averageReview == 1.5 %}-half-o{% elif product.averageReview < 2 %}-o{% endif %}"></li>
+                    <li class="fa fa-star{% if product.averageReview == 2.5 %}-half-o{% elif product.averageReview < 3 %}-o{% endif %}"></li>
+                    <li class="fa fa-star{% if product.averageReview == 3.5 %}-half-o{% elif product.averageReview < 4 %}-o{% endif %}"></li>
+                    <li class="fa fa-star{% if product.averageReview == 4.5 %}-half-o{% elif product.averageReview < 5 %}-o{% endif %}"></li>
+                  </ul>
                   <p>{{product.productDescription|safe}}</p>
                   <form action="{% url 'addCart' product.id %}" method="post">
                     {% csrf_token %}
@@ -173,6 +181,130 @@ dgdgaddgkdnfgae {% endcomment %} {% for product in singleProduct %}
   </section>
   <!--== End Product Single Area Wrapper ==-->
 
+        <div class="row container mx-auto">
+          <div class="col-12">
+            <div class="product-review-tabs-content">
+              <ul class="nav product-tab-nav" id="ReviewTab" role="tablist">
+                <li role="presentation">
+                  <a id="reviews-tab" data-bs-toggle="pill" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Reviews</a>
+                </li><li role="presentation">
+                  <a id="shipping-policy-tab" data-bs-toggle="pill" href="#shipping-policy" role="tab" aria-controls="shipping-policy" aria-selected="false">Shipping Policy</a>
+              </ul>
+              <div class="tab-content product-tab-content" id="ReviewTabContent">
+                <div class="tab-pane fade show active" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                  <div class="product-review-content">
+                  {% for product in singleProduct %}
+                    <div class="review-content-header">
+                      <h3>Customer Reviews</h3>
+                      <div class="review-info">
+                        <h6>{{product.averageReview}}</h6>
+                        <ul class="review-rating">
+                          <li class="fa fa-star{% if product.averageReview == 0.5 %}-half-o{% elif product.averageReview < 1 %}-o{% endif %}"></li>
+                          <li class="fa fa-star{% if product.averageReview == 1.5 %}-half-o{% elif product.averageReview < 2 %}-o{% endif %}"></li>
+                          <li class="fa fa-star{% if product.averageReview == 2.5 %}-half-o{% elif product.averageReview < 3 %}-o{% endif %}"></li>
+                          <li class="fa fa-star{% if product.averageReview == 3.5 %}-half-o{% elif product.averageReview < 4 %}-o{% endif %}"></li>
+                          <li class="fa fa-star{% if product.averageReview == 4.5 %}-half-o{% elif product.averageReview < 5 %}-o{% endif %}"></li>
+                        </ul>
+                        <span class="review-caption">Based on {{reviews.count}} reviews</span>
+                        <span class="review-write-btn show">Write a review</span>
+                      </div>
+                    </div>
+                    <!--== Start Reviews Form Item ==-->
+                      {% if user.is_authenticated %}
+                      {% if orderProduct %}
+                    <div class="reviews-form-area show">
+                      <form action="{% url 'submit_review' product.id %}" method="post">
+                        {% csrf_token %}
+                      <h4 class="title">Write a review</h4>
+                      <div class="reviews-form-content">
+                        <form action="#">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <span class="title">Rating</span>
+                                <div class="rate">
+                                  <input type="radio" name="rating" id="rating10" value="5" required><label for="rating10" title="5"></label>
+                                  <input type="radio" name="rating" id="rating9" value="4.5" required><label for="rating9" title="4.5" class="half"></label>
+                                  <input type="radio" name="rating" id="rating8" value="4" required><label for="rating8" title="4"></label>
+                                  <input type="radio" name="rating" id="rating7" value="3.5" required><label for="rating7" title="3.5" class="half"></label>
+                                  <input type="radio" name="rating" id="rating6" value="3" required><label for="rating6" title="3"></label>
+                                  <input type="radio" name="rating" id="rating5" value="2.5" required><label for="rating5" title="2.5" class="half"></label>
+                                  <input type="radio" name="rating" id="rating4" value="2" required><label for="rating4" title="2"></label>
+                                  <input type="radio" name="rating" id="rating3" value="1.5" required><label for="rating3" title="1.5" class="half"></label>
+                                  <input type="radio" name="rating" id="rating2" value="1" required><label for="rating2" title="1"></label>
+                                  <input type="radio" name="rating" id="rating1" value="0.5" required><label for="rating1" title="0.5" class="half"></label>
+                                </div>
+                                </ul>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="for_review-title">Review Title</label>
+                                <input required id="for_review-title" name="subject" class="form-control" type="text" placeholder="Give your review a title">
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="for_comment">Body of Review (1500)</label>
+                                <textarea required id="for_comment" name="review" class="form-control" placeholder="Write your comments here"></textarea>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-submit-btn">
+                                <button type="submit" class="btn-submit">Post comment</button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      </form>
+                    </div>
+                    {% else %}
+                    <div class="reviews-form-content">
+                    <p>you cannot make review for this product</p>
+                    </div>
+                    {% endif %}
+                    {% else %}
+                      {% endif %}
+                    <!--== End Reviews Form Item ==-->
+                    {% endfor %}
+                    <div class="reviews-content-body">
+                    {% for review in reviews %}
+                      <!--== Start Reviews Content Item ==-->
+                      <div class="review-item">
+                        <ul class="review-rating">
+                          <li class="fa fa-star{% if review.rating == 0.5 %}-half-o{% elif review.rating < 1 %}-o{% endif %}"></li>
+                          <li class="fa fa-star{% if review.rating == 1.5 %}-half-o{% elif review.rating < 2 %}-o{% endif %}"></li>
+                          <li class="fa fa-star{% if review.rating == 2.5 %}-half-o{% elif review.rating < 3 %}-o{% endif %}"></li>
+                          <li class="fa fa-star{% if review.rating == 3.5 %}-half-o{% elif review.rating < 4 %}-o{% endif %}"></li>
+                          <li class="fa fa-star{% if review.rating == 4.5 %}-half-o{% elif review.rating < 5 %}-o{% endif %}"></li>
+                        </ul>
+                        <h3 class="title">{{review.subject}}</h3>
+                        <h5 class="sub-title"><span>{{review.user.first_name}} {{review.user.last_name}}</span> <span>{{review.updated_date}}</span></h5>
+                        <p>{{review.review}}</p>
+                      </div>
+                      <!--== End Reviews Content Item ==-->
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="shipping-policy" role="tabpanel" aria-labelledby="shipping-policy-tab">
+                  <div class="product-shipping-policy">
+                    <div class="section-title">
+                      <h2 class="title">Shipping policy for our store</h2>
+                    </div>
+                    <ul class="shipping-policy-list">
+                      <li>1-2 business days (Typically by end of day)</li>
+                      <li>7 days money back guaranty</li>
+                      <li>24/7 live support</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
   <!--== Start Product Area Wrapper ==-->
   <section class="product-area product-new-arrivals-area product-related-area">
     <div class="container">
@@ -223,7 +355,7 @@ dgdgaddgkdnfgae {% endcomment %} {% for product in singleProduct %}
                         </h4>
                         <div class="prices">
                           <span class="price">${{product.ProductPrice}}</span>
-                        </div>
+                        </div>                        
                       </div>
                     </div>
                   </div>

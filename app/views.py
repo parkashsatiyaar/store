@@ -1,6 +1,9 @@
+from django.contrib.auth.decorators import login_required
+from django.http.response import HttpResponseRedirect
 from cart.models import CartItem
 from cart.views import _getCartId
-from products.models import Product, ProductGallery
+from orders.models import OrderProduct
+from products.models import Product, ProductGallery, ReviewRating
 from .models import Banner, Category, Home
 from django.shortcuts import redirect, render
 from django.core.paginator import Paginator
@@ -100,11 +103,20 @@ def singleProduct(request, name):
         return redirect('products')
     inCart = CartItem.objects.filter(cart__cartId=_getCartId(
         request), product=singleProduct).exists()
+    try:
+        orderProduct = OrderProduct.objects.filter(
+            user=request.user, product_id=singleProduct.id).exists()
+    except:
+        orderProduct = None
+    reviews = ReviewRating.objects.filter(
+        product_id=singleProduct.id, status=True)[:10]
     context = {
         'products': products,
         'singleProduct': product,
         'inCart': inCart,
         'productGallery': productGallery,
+        'orderProduct': orderProduct,
+        'reviews': reviews,
     }
     return render(request, "store/product.html", context)
 
@@ -124,3 +136,26 @@ def about(request):
     }
 
     return render(request, "store/about.html", context)
+
+
+@login_required(login_url='signin')
+def submit_review(request, product_id):
+    if request.method == "POST":
+        try:
+            review = ReviewRating.objects.get(
+                user=request.user, product=product_id)
+            review.subject = request.POST['subject']
+            review.review = request.POST['review']
+            review.rating = request.POST['rating']
+            review.save()
+        except:
+            review = ReviewRating()
+            review.subject = request.POST['subject']
+            review.review = request.POST['review']
+            review.rating = request.POST['rating']
+            review.ip = request.META.get('REMOTE_ADDR')
+            review.product_id = product_id
+            review.user_id = request.user.id
+            review.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
