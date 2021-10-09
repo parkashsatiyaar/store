@@ -41,13 +41,13 @@ INSTALLED_APPS = [
     'colorfield',
     'django.contrib.admin',
     'corsheaders',
-    #   'storages',
-
 ]
 
+#   'storages',
 # only if django version >= 3.0
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 SILENCED_SYSTEM_CHECKS = ['security.W019']
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
