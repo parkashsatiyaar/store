@@ -6415,3 +6415,11 @@ input:checked ~ label, label:hover ~ label {
 input:checked + label:hover, input:checked ~ label:hover, input:checked ~label:hover ~ label, label:hover ~ input:checked ~ label {
   color: #cc9000;
 }
+
+/* .content-box{
+  background: #f5c69f34;
+} */
+
+.logo-main {
+  width: 120px;
+}
