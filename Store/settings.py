@@ -21,7 +21,7 @@ ALLOWED_HOSTS = ['*']
 SECRET_KEY = 'd*66=tumtt@k+xi^lp7+l4^mh^^u4p^-tdk#tll-vveq4xq+rl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Application definition
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'colorfield',
     'django.contrib.admin',
     'corsheaders',
+    'whitenoise.runserver_nostatic'
 ]
 
 #   'storages',
@@ -51,6 +52,7 @@ SILENCED_SYSTEM_CHECKS = ['security.W019']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -59,7 +61,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'Store.urls'
@@ -145,12 +146,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static_media'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_media')
 
 STATICFILES_DIRS = [
-    BASE_DIR, "static",
+    os.path.join(BASE_DIR, "static"),
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # media root
 
